@@ -1,10 +1,9 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import React from 'react'
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,16 +12,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import Image from "next/image"
-
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { MeteorsDemo } from "./MeteorsDemo";
+import { UsedTexts } from "../../constants/index";
 
 const formSchema = z.object({
-  username: z.string().min(2).max(50),
-})
-
-
+  username: z.string().min(1, "Username is required"),
+});
 
 const AuthForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -30,20 +27,24 @@ const AuthForm = () => {
     defaultValues: {
       username: "",
     },
-  })
+  });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    console.log(values);
   }
+
   return (
     <div className="card-border lg:min-w-[566px]">
-      <div className="flex flex-col gap-6 card py-14 px-10">
-        <div className="flex flex-row gap-2 justify-center">
-          <Image src="/logo.png" alt="logo" height={32} width={38} />
-
+      <div className="flex flex-col gap-3 card py-7 px-10">
+        <div className="flex flex-row gap-1 justify-center">
+          <MeteorsDemo
+            img={"/logo.png"}
+            title={UsedTexts.Title}
+            desc={UsedTexts.Description}
+          />
         </div>
       </div>
 
@@ -68,9 +69,8 @@ const AuthForm = () => {
           <Button type="submit">Submit</Button>
         </form>
       </Form>
-
     </div>
-  )
-}
+  );
+};
 
-export default AuthForm
+export default AuthForm;
